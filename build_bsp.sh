@@ -67,7 +67,7 @@ else
     exit 1
 fi
 
-cd buildtools
+cd ../mx4
 ./changebranch.sh "mx4" "$mx4_branch"
 
 if [ "$require_pic" == "true" ]; then

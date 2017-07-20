@@ -9,22 +9,22 @@ if [ "$curr_repo" == "mx4" ]; then
         echo "Error: can not checkout mx4 inside mx4!"
         exit 1
     fi
-    if [ "${PWD##*/}" == "buildtools" ]; then
+    if [ "${PWD##*/}" == "mx4" ]; then
         needsdirpop="true";
         if [ "$1" == "pic" ]; then
-            mkdir -p "../pic"
-            pushd "../pic"
+            mkdir -p "pic"
+            pushd "pic"
         elif [ "$1" == "linux_vf" ]; then
-            mkdir -p "../t20/linux_vf"
-            pushd "../t20/linux_vf"
+            mkdir -p "t20/linux_vf"
+            pushd "t20/linux_vf"
         elif [ "$1" == "u-boot_vf" ]; then
-            mkdir -p "../t20/u-boot_vf"
-            pushd "../t20/u-boot_vf"
+            mkdir -p "t20/u-boot_vf"
+            pushd "t20/u-boot_vf"
         else
             needsdirpop="false";
         fi
     else
-        echo "currently not supported to run outside of mx4/buildtools!"
+        echo "currently not supported to run outside of mx4!"
         exit 1
     fi
 fi
@@ -53,7 +53,7 @@ if [ "$1" == "mx4" ]; then
 !t20/colibri-t20-L4T-linux-kernel/net/netfilter/*
 !t20/colibri-t20-L4T-linux-kernel/net/ipv4/netfilter/*" > .git/info/sparse-checkout
     fi
-    git remote add -f origin https://github.com/hostmobility/mx4
+    git remote add -f origin http://github.com/hostmobility/mx4
     git pull origin master
 elif [ "$1" == "linux_vf" ]; then
     git init
@@ -70,15 +70,15 @@ elif [ "$1" == "linux_vf" ]; then
 !net/netfilter/*
 !net/ipv4/netfilter/*" > .git/info/sparse-checkout
     fi
-    git remote add -f origin https://github.com/hostmobility/linux-toradex
+    git remote add -f origin http://github.com/hostmobility/linux-toradex
     git pull origin hm_tegra
 elif [ "$1" == "u-boot_vf" ]; then
     git init
-    git remote add -f origin https://github.com/hostmobility/u-boot-toradex
+    git remote add -f origin http://github.com/hostmobility/u-boot-toradex
     git pull origin 2015.04-hm
 elif [ "$1" == "pic" ]; then
     git init
-    git remote add -f origin https://github.com/hostmobility/mx4-pic
+    git remote add -f origin http://github.com/hostmobility/mx4-pic
     git pull origin master
 else
     echo "Error: invalid parameter \"$1\""
@@ -87,6 +87,7 @@ else
     fi
     exit 1
 fi
+
 if [ "$needsdirpop" == "true" ]; then
     popd
 fi
