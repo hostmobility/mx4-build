@@ -80,6 +80,10 @@ elif [ "$1" == "pic" ]; then
     git init
     git remote add -f origin http://github.com/hostmobility/mx4-pic
     git pull origin master
+elif [ "$1" == "ultra" ]; then
+    git init
+    git remote add -f origin https://github.com/hostmobility/ultra
+    git pull origin master
 else
     echo "Error: invalid parameter \"$1\""
     if [ "$needsdirpop" == "true" ]; then

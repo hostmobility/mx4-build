@@ -21,6 +21,30 @@ mkdir -p environment
 echo "export BE_MX4_BUILD_DIR=\"${BE_MX4_BUILD_DIR}\"" > environment/env.txt
 echo "export BE_MX4_DIR=\"${BE_MX4_DIR}\"" >> environment/env.txt
 
+checkoutUltraApp="false"
+checkoutNewKernel="false"
+
+while true; do
+    echo "Select what you want to configure for \n\t1: Simple(mx4, mx4-pic)\n\t2: GTT(mx4, mx4-pic, ultra)\n\t3: All platforms(mx4, mx4-pic, linux_vf, u-boot_vf, ultra)?"
+    read confValue
+
+    if [ "$confValue" == "1" ]; then
+        echo "Configured for Simple!"
+        break
+    elif [ "$confValue" == "2" ]; then
+        echo "Configured for GTT!"
+        checkoutUltraApp="true"
+        break
+    elif [ "$confValue" == "3" ]; then
+        echo "Configured for All platforms!"
+        checkoutUltraApp="true"
+        checkoutNewKernel="true"
+        break
+    else
+        echo "Invalid configuration value $confValue!\n"
+    fi
+done
+
 if [ -d "$BE_MX4_DIR" ]; then
     cd "$BE_MX4_DIR"
     mx4_repo="$(basename $(git rev-parse --show-toplevel) || \"\")"
@@ -45,10 +69,16 @@ fi
 
 cd "$BE_MX4_DIR"
 $BE_MX4_BUILD_DIR/buildtools/./checkoutrepo.sh pic
-cd "$BE_MX4_DIR"
-$BE_MX4_BUILD_DIR/buildtools/./checkoutrepo.sh linux_vf
-cd "$BE_MX4_DIR"
-$BE_MX4_BUILD_DIR/buildtools/./checkoutrepo.sh u-boot_vf
-
+if [ "$checkoutNewKernel" == "true" ]; then
+    cd "$BE_MX4_DIR"
+    $BE_MX4_BUILD_DIR/buildtools/./checkoutrepo.sh linux_vf
+    cd "$BE_MX4_DIR"
+    $BE_MX4_BUILD_DIR/buildtools/./checkoutrepo.sh u-boot_vf
+fi
+if [ "$checkoutUltraApp" == "true" ]; then
+    mkdir "$BE_MX4_DIR/../ultra"
+    cd "$BE_MX4_DIR/../ultra"
+    $BE_MX4_BUILD_DIR/buildtools/./checkoutrepo.sh ultra
+fi
 cd $BE_MX4_BUILD_DIR
 
