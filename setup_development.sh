@@ -7,8 +7,10 @@ fi
 
 source environment/env.txt
 
-BE_MX4_ALL_DIR="/mnt/d/MX4-ALL/"
+BE_MX4_ALL_DIR="/mnt/d/MX4_ALL/"
+mkdir -p "$BE_MX4_ALL_DIR"
 pushd "$BE_MX4_ALL_DIR"
+
 echo "master" > mx4-branches.txt
 echo "mx4-bsp-v1.2.x" >> mx4-branches.txt
 echo "mx4-bsp-v1.3.x" >> mx4-branches.txt
@@ -50,6 +52,8 @@ echo "LinuxImageV2.7" >> hostmobility-bsp-platform-branches.txt
 echo "master" > mx4-wlink8-backport-branches.txt
 echo "mx4-t30" >> mx4-wlink8-backport-branches.txt
 
+repos3="mx4-pic"
+
 repos="mx4 \
     mx4-pic \
     hostmobility-bsp-platform \
@@ -59,6 +63,11 @@ repos="mx4 \
     backports-3.10-2 \
     u-boot-toradex \
     linux-toradex"
+
+repos2="linux-toradex \
+    mx4 \
+    mx4-pic \
+    u-boot-toradex"
 
 for repo in $repos;
 do
@@ -73,12 +82,21 @@ do
         branchName="${repoBranch/origin\//}"
         branchName="${branchName/\//_}"
         if [ -d "$branchName" ]; then
+            echo "found $repo $branchName. Pulling newest from origin"
             cd $branchName
             git pull origin $branchName
             cd ..
         else
-            git clone https://github.com/hostmobility/$repo -b $branchName $branchName
+            echo "cloning $repo $branchName"
+            mkdir -p "$branchName"
+            cd "$branchName"
+            $BE_MX4_BUILD_DIR/buildtools/checkoutrepo.sh $repo $branchName
+            sleep 5
+            git remote set-url --push origin https://github.com/ViktorFriberg/$repo
+            cd ..
+            #git clone https://github.com/hostmobility/$repo -b $branchName $branchName
         fi
+        sleep 1
     done;
     popd
 done;
