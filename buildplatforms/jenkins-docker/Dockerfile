@@ -1,4 +1,4 @@
-FROM jenkins:2.60.2
+FROM jenkins:2.73.3
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -64,7 +64,7 @@ RUN install-plugins.sh \
 	github:1.27.0 \
 	ssh-credentials:1.13 \
 	role-strategy:2.5.0 \
-	blueocean:1.1.2 \
+	blueocean:1.3.2 \
 	blueocean-pipeline-editor:0.2.0 \
 	delivery-pipeline-plugin:1.0.2 \
 	jobConfigHistory:2.16 \
