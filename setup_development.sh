@@ -21,6 +21,7 @@ echo "mx4-t30-fr" >> mx4-branches.txt
 echo "ultra-v1.x.x" >> mx4-branches.txt
 echo "ultra-v1.x.x" >> mx4-branches.txt
 echo "wlan-backports-fix-1.5.x" >> mx4-branches.txt
+echo "mx4-2.0" >> mx4-branches.txt
 
 echo "master" > mx4-pic-branches.txt
 echo "mx4-bsp-v1.2.x" >> mx4-pic-branches.txt

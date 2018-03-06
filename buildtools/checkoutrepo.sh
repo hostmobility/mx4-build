@@ -83,9 +83,14 @@ elif [[ "$1" == "linux_vf" ]] || [[ "$1" == "linux-toradex" ]]; then
         git config core.sparseCheckout true
         mkdir -p ".git/info"
         echo "*
+!include/linux/netfilter/*
+!include/linux/netfilter_ipv4/*
+!include/linux/netfilter_ipv6/*
 !include/uapi/linux/netfilter/*
 !include/uapi/linux/netfilter_ipv4/*
 !include/uapi/linux/netfilter_ipv6/*
+!drivers/gpu/drm/nouveau/nvkm/subdev/i2c/aux.c
+!drivers/gpu/drm/nouveau/nvkm/subdev/i2c/aux.h
 !net/netfilter/*
 !net/ipv4/netfilter/*" > .git/info/sparse-checkout
     fi
