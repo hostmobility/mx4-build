@@ -23,8 +23,9 @@ RUN dpkg --add-architecture i386 \
 
 # Download and Install XC16 Compiler, Current Version
 
-RUN curl -fSL -A "Mozilla/4.0" -o /tmp/xc16.run "http://www.microchip.com/mplabxc16linux" \
-    && chmod a+x /tmp/xc16.run \
+# RUN curl -fSL -A "Mozilla/4.0" -o /tmp/xc16.run "http://www.microchip.com/mplabxc16linux" \
+COPY xc16-v1.36-full-install-linux-installer.run /tmp/xc16.run
+RUN chmod a+x /tmp/xc16.run \
     && /tmp/xc16.run --mode unattended --unattendedmodeui none \
         --netservername localhost --LicenseType FreeMode --prefix /opt/microchip/xc16 \
     && rm /tmp/xc16.run
@@ -43,8 +44,9 @@ ENV PATH $PATH:/opt/microchip/xc16/bin
 
 # Download and Install MPLABX IDE, Current Version
 
-RUN curl -fSL -A "Mozilla/4.0" -o /tmp/mplabx-installer.tar "http://www.microchip.com/mplabx-ide-linux-installer" \
-    && tar xf /tmp/mplabx-installer.tar && rm /tmp/mplabx-installer.tar \
+# RUN curl -fSL -A "Mozilla/4.0" -o /tmp/mplabx-installer.tar "http://www.microchip.com/mplabx-ide-linux-installer" \
+COPY MPLABX-v5.10-linux-installer.tar /tmp/mplabx-installer.tar
+RUN tar xf /tmp/mplabx-installer.tar && rm /tmp/mplabx-installer.tar \
     && USER=root ./*-installer.sh --nox11 \
         -- --unattendedmodeui none --mode unattended --installdir /opt/microchip/mplabx \
     && rm ./*-installer.sh
