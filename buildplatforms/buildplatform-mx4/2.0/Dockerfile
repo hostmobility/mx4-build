@@ -1,4 +1,4 @@
-FROM debian:8.9
+FROM debian:9.9
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -9,6 +9,10 @@ diffstat unzip texinfo gcc-multilib u-boot-tools rsync cbootimage bc \
 build-essential kmod chrpath socat mtd-utils device-tree-compiler mtools \
 lzop dosfstools parted libncurses5-dev patchutils tmux vim curl python python3 locales \
 libsdl1.2-dev libssl-dev && rm -rf /var/lib/apt/lists/*
+
+# Install google git-repo
+RUN curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > /usr/bin/repo
+RUN chmod a+x /usr/bin/repo
 
 ENV USER_HOME /home/builder
 
